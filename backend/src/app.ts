@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import { Request, Response } from "express";
+import db from "./db/index";
 
 class App {
 
@@ -22,7 +23,7 @@ class App {
 
     router.get('/', (req: Request, res: Response) => {
       res.status(200).send({
-        message: 'Hello World!'
+        message: 'helloas world!'
       })
     });
 
