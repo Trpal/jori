@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const express = require("express");
 const bodyParser = require("body-parser");
+const express = require("express");
+const index_1 = require("./db/index");
 class App {
     constructor() {
         this.app = express();
@@ -15,8 +16,11 @@ class App {
     routes() {
         const router = express.Router();
         router.get('/', (req, res) => {
+            index_1.query('SELECT now()').then((mes) => {
+                console.log(mes);
+            });
             res.status(200).send({
-                message: 'helloas world!'
+                message: 'helloas world!',
             });
         });
         router.post('/', (req, res) => {

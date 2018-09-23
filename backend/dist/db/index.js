@@ -1,10 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const { Pool } = require('pg');
-const pool = new Pool();
-exports.default = {
-    query: (text, params, callback) => {
-        return pool.query(text, params, callback);
-    }
+const pg_1 = require("pg");
+module.exports = {
+    query: (text, params) => pg_1.Pool.query(text, params),
 };
 //# sourceMappingURL=index.js.map
