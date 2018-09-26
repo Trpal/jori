@@ -1,17 +1,17 @@
-import * as express from "express";
-import * as bodyParser from "body-parser";
-import { Request, Response } from "express";
-import db from "./db/index";
+import * as bodyParser from 'body-parser';
+import * as express from 'express';
+import { Request, Response } from 'express';
+const db = require('./db');
 
 class App {
+
+  public app: express.Application;
 
   constructor() {
     this.app = express();
     this.config();
     this.routes();
   }
-
-  public app: express.Application;
 
   private config(): void {
     this.app.use(bodyParser.json());
@@ -21,10 +21,9 @@ class App {
   private routes(): void {
     const router = express.Router();
 
-    router.get('/', (req: Request, res: Response) => {
-      res.status(200).send({
-        message: 'helloas world!'
-      })
+    router.get('/', async (req: Request, res: Response) => {
+      const { rows } = await db.query('SELECT now()');
+      res.send(rows[0]);
     });
 
     router.post('/', (req: Request, res: Response) => {
@@ -32,7 +31,7 @@ class App {
       // query a database and save data
       res.status(200).send(data);
     });
-    this.app.use('/', router)
+    this.app.use('/', router);
   }
 
 }
