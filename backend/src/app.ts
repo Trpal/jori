@@ -1,7 +1,7 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import { Request, Response } from 'express';
-import { query } from './db/index';
+const db = require('./db');
 
 class App {
 
@@ -21,14 +21,9 @@ class App {
   private routes(): void {
     const router = express.Router();
 
-    router.get('/', (req: Request, res: Response) => {
-      query('SELECT now()').then((mes) => {
-        console.log(mes);
-      });
-
-      res.status(200).send({
-        message: 'helloas world!',
-      });
+    router.get('/', async (req: Request, res: Response) => {
+      const { rows } = await db.query('SELECT now()');
+      res.send(rows[0]);
     });
 
     router.post('/', (req: Request, res: Response) => {

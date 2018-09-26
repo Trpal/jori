@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const bodyParser = require("body-parser");
 const express = require("express");
-const index_1 = require("./db/index");
+const db = require('./db');
 class App {
     constructor() {
         this.app = express();
@@ -15,13 +15,9 @@ class App {
     }
     routes() {
         const router = express.Router();
-        router.get('/', (req, res) => {
-            index_1.query('SELECT now()').then((mes) => {
-                console.log(mes);
-            });
-            res.status(200).send({
-                message: 'helloas world!',
-            });
+        router.get('/', async (req, res) => {
+            const { rows } = await db.query('SELECT now()');
+            res.send(rows[0]);
         });
         router.post('/', (req, res) => {
             const data = req.body;
