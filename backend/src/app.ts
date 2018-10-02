@@ -1,7 +1,7 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import { Request, Response } from 'express';
-const db = require('./db');
+import { query } from './db';
 
 class App {
 
@@ -22,7 +22,7 @@ class App {
     const router = express.Router();
 
     router.get('/', async (req: Request, res: Response) => {
-      const { rows } = await db.query('SELECT now()');
+      const { rows } = await query('SELECT now()');
       res.send(rows[0]);
     });
 

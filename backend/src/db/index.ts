@@ -1,7 +1,7 @@
-const { Pool } = require('pg')
+import { Pool } from 'pg';
 
 const pool = new Pool();
 
-module.exports = {
-  query: (text, params) => pool.query(text, params),
-};
+const query = (text) => pool.query(text);
+
+export { query };
