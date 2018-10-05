@@ -6,6 +6,7 @@
       check out the
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
     </p>
+    <button @click="fetchTime">Hae aika</button>
     <h3>Installed CLI Plugins</h3>
     <ul>
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
@@ -17,10 +18,18 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import axios from 'axios';
+import { apiRoot } from '../constants';
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
+  fetchTime() :void {
+    axios.get(apiRoot)
+      .then((response) => {
+        console.log(response);
+      });
+  }
 }
 </script>
 

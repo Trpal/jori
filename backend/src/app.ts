@@ -1,7 +1,9 @@
 import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 import * as express from 'express';
 import { Request, Response } from 'express';
 import { query } from './db';
+import userRoutes from './routes/user';
 
 class App {
 
@@ -16,6 +18,7 @@ class App {
   private config(): void {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app.use(cors());
   }
 
   private routes(): void {
@@ -23,7 +26,7 @@ class App {
 
     router.get('/', async (req: Request, res: Response) => {
       const { rows } = await query('SELECT now()');
-      res.send(rows[0]);
+      res.status(200).send(rows[0]);
     });
 
     router.post('/', (req: Request, res: Response) => {
