@@ -1,12 +1,9 @@
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
-import { Request, Response } from 'express';
 import { query } from './db';
-import userRoutes from './routes/user';
 
 class App {
-
   public app: express.Application;
 
   constructor() {
@@ -24,19 +21,18 @@ class App {
   private routes(): void {
     const router = express.Router();
 
-    router.get('/', async (req: Request, res: Response) => {
+    router.get('/', async (req: express.Request, res: express.Response) => {
       const { rows } = await query('SELECT now()');
       res.status(200).send(rows[0]);
     });
 
-    router.post('/', (req: Request, res: Response) => {
+    router.post('/', (req: express.Request, res: express.Response) => {
       const data = req.body;
       // query a database and save data
       res.status(200).send(data);
     });
     this.app.use('/', router);
   }
-
 }
 
 export default new App().app;
